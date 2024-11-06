@@ -2,7 +2,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix6.hardware.TalonFX;
 
-public class CHASSIS {
+public class Chassis {
     //hardware
     static TalonFX mDriveLeft1; 
     static TalonFX mDriverleft2;
@@ -21,7 +21,7 @@ public class CHASSIS {
 
 
     //constructor
-    public CHASSIS(){
+    public Chassis(){
         mDriveLeft1 = new TalonFX(0);
         mDriverleft2 = new TalonFX(1);
         mDriverright1 = new TalonFX(2);
