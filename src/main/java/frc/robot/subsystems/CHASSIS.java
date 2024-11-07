@@ -1,13 +1,16 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
+import frc.robot.Constants;
 
 public class Chassis {
     //hardware
-    static TalonFX mDriveLeft1; 
-    static TalonFX mDriverleft2;
-    static TalonFX mDriverright1;
-    static TalonFX mDriverright2;
+    static TalonSRX mDriveLeft1; 
+    static TalonSRX mDriverLeft2;
+    static TalonSRX mDriverRight1;
+    static TalonSRX mDriverRight2;
     
     //logica
     double speed;
@@ -22,10 +25,10 @@ public class Chassis {
 
     //constructor
     public Chassis(){
-        mDriveLeft1 = new TalonFX(0);
-        mDriverleft2 = new TalonFX(1);
-        mDriverright1 = new TalonFX(2);
-        mDriverright2 = new TalonFX(3);
+        mDriveLeft1 = new TalonSRX(Constants.kDriveLeft1);
+        mDriverLeft2 = new TalonSRX(Constants.kDriveLeft2);
+        mDriverRight1 = new TalonSRX(Constants.kDriveRight1);
+        mDriverRight2 = new TalonSRX(Constants.kDriveRight2);
 
         speed = 0;
         realleftSpeed = 0;
@@ -35,10 +38,10 @@ public class Chassis {
     }
     //funciones
     public void stop(){
-        mDriveLeft1.set(0);
-        mDriverleft2.set(0);
-        mDriverright1.set(0);
-        mDriverright2.set(0);
+        mDriveLeft1.set(ControlMode.PercentOutput, 0);
+        mDriverLeft2.set(ControlMode.PercentOutput, 0);
+        mDriverRight1.set(ControlMode.PercentOutput, 0);
+        mDriverRight2.set(ControlMode.PercentOutput, 0);
     }
     public void avanzar(double yinput, double xinput){
         if(yinput<0){
@@ -51,10 +54,10 @@ public class Chassis {
         }
         realleftSpeed = leftspeed;
         realrightSpeed = rightspeed;
-        mDriveLeft1.set(realleftSpeed);
-        mDriverleft2.set(realleftSpeed);
-        mDriverright1.set(-realrightSpeed);
-        mDriverright2.set(-realrightSpeed);
+        mDriveLeft1.set(ControlMode.PercentOutput, realleftSpeed);
+        mDriverLeft2.set(ControlMode.PercentOutput, realleftSpeed);
+        mDriverRight1.set(ControlMode.PercentOutput, -realrightSpeed);
+        mDriverRight2.set(ControlMode.PercentOutput, -realrightSpeed);
     }
 }
    
