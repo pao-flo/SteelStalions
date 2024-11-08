@@ -19,4 +19,7 @@ public final class Constants {
     //--------------------intake--------------//
     public static final int kIntake = 8;
 
+    //--------------------garra--------------//
+    public static final int kGarra= 8;
+
 }
