@@ -9,23 +9,22 @@ import frc.robot.Constants;
 public class Intake {
 
     TalonSRX intake;
-    double velocidad;
 
     public Intake(){
-        intake = new TalonSRX(0);
-        velocidad = 0;
+        intake = new TalonSRX(Constants.kIntake);
     }
-    public void eat(double Rstick){
-        if(Rstick>0){
-            intake.set(ControlMode.PercentOutput, 0.4);
-        }else if(Rstick<0){
-            intake.set(ControlMode.PercentOutput, -0.4);
+    
+    public void eat(double Rtrigger, double Ltrigger){
+        if(Rtrigger>Constants.kStickTolerance){
+            intake.set(ControlMode.PercentOutput, Rtrigger);
+        }else if(Ltrigger>Constants.kStickTolerance){
+            intake.set(ControlMode.PercentOutput, -Ltrigger);
         }else{
             intake.set(ControlMode.PercentOutput, 0);
         }
     }
     
     public void stop(){
-        velocidad=0;
+        intake.set(ControlMode.PercentOutput, 0);
     }
 }   

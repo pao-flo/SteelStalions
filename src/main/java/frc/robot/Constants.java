@@ -21,5 +21,6 @@ public final class Constants {
 
     //--------------------garra--------------//
     public static final int kGarra= 8;
+    public static final int kArm= 9;
 
 }

@@ -59,5 +59,13 @@ public class Chassis {
         mDriverRight1.set(ControlMode.PercentOutput, -realrightSpeed);
         mDriverRight2.set(ControlMode.PercentOutput, -realrightSpeed);
     }
+
+    public void outMotoresAuto( double left1, double left2, 
+    double right1, double right2 ){
+      mDriveLeft1.set(ControlMode.PercentOutput, left1);
+      mDriverLeft2.set(ControlMode.PercentOutput, left2);
+      mDriverRight1.set(ControlMode.PercentOutput, right1);
+      mDriverRight2.set(ControlMode.PercentOutput, right2);
+    }
 }
    

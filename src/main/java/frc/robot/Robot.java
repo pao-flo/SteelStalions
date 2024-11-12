@@ -9,6 +9,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.ControlBoard.Control;
 import frc.robot.subsystems.Chassis;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Garra;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -20,6 +22,8 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   Chassis mChassis;
+  Intake mIntake;
+  Garra mGarra;
 
   Control mControl;
 
@@ -31,6 +35,8 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     mChassis = new Chassis();
+    mIntake = new Intake();
+    mGarra = new Garra();
     mControl = new Control();
 
   }
@@ -87,6 +93,9 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic(){
     mChassis.avanzar(mControl.left_Y_stick_driver(),mControl.left_X_stick_driver());
+    mIntake.eat(mControl.right_trigger_mecanisms(), mControl.left_trigger_mecanisms());
+    mGarra.grab(mControl.right_x_stick_mecanisms());
+    mGarra.moveArm(mControl.left_y_stick_mecanisms());
   }
 
   @Override
