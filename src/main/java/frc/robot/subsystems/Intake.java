@@ -23,6 +23,10 @@ public class Intake {
             intake.set(ControlMode.PercentOutput, 0);
         }
     }
+
+    public void eatAuto(double power){
+        intake.set(ControlMode.PercentOutput, power);
+    }
     
     public void stop(){
         intake.set(ControlMode.PercentOutput, 0);

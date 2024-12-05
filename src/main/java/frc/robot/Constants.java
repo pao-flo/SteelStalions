@@ -12,15 +12,16 @@ public final class Constants {
   
     //--------------------chassis--------------//
     public static final int kDriveRight1 = 1;
-    public static final int kDriveRight2 = 6;
-    public static final int kDriveLeft1 = 4;
-    public static final int kDriveLeft2 = 2;
+    public static final int kDriveRight2 = 2;
+    public static final int kDriveLeft1 = 3;
+    public static final int kDriveLeft2 = 4;
   
     //--------------------intake--------------//
-    public static final int kIntake = 8;
+    public static final int kIntake = 5;
 
     //--------------------garra--------------//
-    public static final int kGarra= 8;
-    public static final int kArm= 9;
+    public static final int kGarra= 6;
 
+    public static final int kLedsAllLedsSize = 20;
 }
+

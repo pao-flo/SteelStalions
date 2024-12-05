@@ -10,32 +10,21 @@ import frc.robot.Constants;
 
 public class Garra extends SubsystemBase {
 
-    TalonSRX Garra;
-    CANSparkMax Arm;
+    CANSparkMax Garra;
 
     public Garra(){
-        Garra = new TalonSRX(Constants.kGarra);
-        Arm = new CANSparkMax(Constants.kArm, MotorType.kBrushless);
+        Garra = new CANSparkMax(Constants.kGarra, MotorType.kBrushless);
     }
 
     public void grab(double Rstick){
         if(Math.abs(Rstick)>Constants.kStickTolerance){
-            Garra.set(ControlMode.PercentOutput, Rstick);
+            Garra.set(Rstick);
         }else{
-            Garra.set(ControlMode.PercentOutput, 0);
-        }
-    }
-
-    public void moveArm(double Lstick){
-        if(Math.abs(Lstick)>Constants.kStickTolerance){
-            Arm.set(Lstick);
-        }else{
-            Arm.set(0);
+            Garra.set(0);
         }
     }
     
     public void stop(){
-        Garra.set(ControlMode.PercentOutput, 0);
-        Arm.set(0);
+        Garra.set(0);
     }
 }

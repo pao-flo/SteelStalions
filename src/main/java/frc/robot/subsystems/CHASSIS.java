@@ -2,70 +2,96 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.kauailabs.navx.frc.AHRS;
+import edu.wpi.first.wpilibj.Timer;
 
+import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 
 public class Chassis {
     //hardware
-    static TalonSRX mDriveLeft1; 
-    static TalonSRX mDriverLeft2;
-    static TalonSRX mDriverRight1;
-    static TalonSRX mDriverRight2;
+    public AHRS navx;
+    public double angle;
+
+    //-----------------------características---------------------//
+    //Hardware
+    TalonSRX Right1;
+    TalonSRX Right2;
+    TalonSRX Left1;
+    TalonSRX Left2;
     
-    //logica
-    double speed;
-
-
-    double leftspeed;
-    double rightspeed;
-
-    double realleftSpeed;
-    double realrightSpeed;
+    //Variables de logica
+    double velocidad;
+    double rightSpeed;
+    double leftSpeed;
+    double realRightSpeed;
+    double realLeftSpeed;
 
 
     //constructor
     public Chassis(){
-        mDriveLeft1 = new TalonSRX(Constants.kDriveLeft1);
-        mDriverLeft2 = new TalonSRX(Constants.kDriveLeft2);
-        mDriverRight1 = new TalonSRX(Constants.kDriveRight1);
-        mDriverRight2 = new TalonSRX(Constants.kDriveRight2);
+        Right1 = new TalonSRX(Constants.kDriveRight1);
+        Right2 = new TalonSRX(Constants.kDriveRight2);
+        Left1 = new TalonSRX(Constants.kDriveLeft1);
+        Left2 = new TalonSRX(Constants.kDriveLeft2);
+        //cosas que iniciamos
+        velocidad=0;
+        realLeftSpeed=0;
+        realRightSpeed=0;
 
-        speed = 0;
-        realleftSpeed = 0;
-        realrightSpeed = 0;
-        leftspeed = 0;
-        rightspeed = 0;
-    }
-    //funciones
-    public void stop(){
-        mDriveLeft1.set(ControlMode.PercentOutput, 0);
-        mDriverLeft2.set(ControlMode.PercentOutput, 0);
-        mDriverRight1.set(ControlMode.PercentOutput, 0);
-        mDriverRight2.set(ControlMode.PercentOutput, 0);
-    }
-    public void avanzar(double yinput, double xinput){
-        if(yinput<0){
-            rightspeed = yinput+xinput;
-            leftspeed = yinput-xinput;
+        try{
+            navx = new AHRS(SPI.Port.kMXP);
+            Timer.delay(0.5);
+            navx.reset();
+            Timer.delay(0.5);
         }
-        else{
-            rightspeed = yinput-xinput;
-            leftspeed = yinput+xinput;
+        catch(Exception e){
+            System.out.println("navx not working");
         }
-        realleftSpeed = leftspeed;
-        realrightSpeed = rightspeed;
-        mDriveLeft1.set(ControlMode.PercentOutput, realleftSpeed);
-        mDriverLeft2.set(ControlMode.PercentOutput, realleftSpeed);
-        mDriverRight1.set(ControlMode.PercentOutput, -realrightSpeed);
-        mDriverRight2.set(ControlMode.PercentOutput, -realrightSpeed);
+    }
+
+    public void avanzar(double yInput, double xInput){
+        if(yInput>0){
+            rightSpeed = yInput + xInput;
+            leftSpeed = yInput - xInput;
+            }else{
+            rightSpeed = yInput + xInput;
+            leftSpeed = yInput - xInput;
+            }
+    
+            if(Math.abs(realRightSpeed)>Math.abs(rightSpeed)){
+                realRightSpeed = realRightSpeed - 0.05;
+            }else if(Math.abs(realRightSpeed)<Math.abs(rightSpeed)){
+                realRightSpeed = realRightSpeed + 0.05;
+            }else{
+                realRightSpeed = rightSpeed;
+            }
+    
+            //cosas de la funcion
+            Right1.set(ControlMode.PercentOutput, rightSpeed);
+            Right2.set(ControlMode.PercentOutput, rightSpeed);
+            Left1.set(ControlMode.PercentOutput, -leftSpeed);
+            Left2.set(ControlMode.PercentOutput, -leftSpeed);
     }
 
     public void outMotoresAuto( double left1, double left2, 
     double right1, double right2 ){
-      mDriveLeft1.set(ControlMode.PercentOutput, left1);
-      mDriverLeft2.set(ControlMode.PercentOutput, left2);
-      mDriverRight1.set(ControlMode.PercentOutput, right1);
-      mDriverRight2.set(ControlMode.PercentOutput, right2);
+      Left1.set(ControlMode.PercentOutput, left1);
+      Left2.set(ControlMode.PercentOutput, left2);
+      Right1.set(ControlMode.PercentOutput, right1);
+      Right2.set(ControlMode.PercentOutput, right2);
+    }
+
+    public void stop(){
+        Left1.set(ControlMode.PercentOutput, 0);
+        Left2.set(ControlMode.PercentOutput, 0);
+        Right1.set(ControlMode.PercentOutput, 0);
+        Right2.set(ControlMode.PercentOutput, 0);
+    }
+
+    public void outputTelemetry(){
+        SmartDashboard.putNumber("navx angle", navx.getAngle());
     }
 }
    

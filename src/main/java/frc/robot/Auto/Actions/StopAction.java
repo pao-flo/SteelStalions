@@ -2,11 +2,11 @@ package frc.robot.Auto.Actions;
 
 import frc.robot.subsystems.Chassis;
 
-public class MoveBackAction{
+public class StopAction{
   Chassis mAutoDrive = new Chassis();
   
-  public void finalMoveBackACtion(){
-    mAutoDrive.outMotoresAuto(0.3, 0.3, -0.3, -0.3);
+  public void finalStopAction(){
+    mAutoDrive.outMotoresAuto(0, 0, 0, 0);
     //checar signos
   }
 }
