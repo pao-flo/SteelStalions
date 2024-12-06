@@ -16,9 +16,9 @@ public class Intake {
     
     public void eat(double Rtrigger, double Ltrigger){
         if(Rtrigger>Constants.kStickTolerance){
-            intake.set(ControlMode.PercentOutput, Rtrigger);
+            intake.set(ControlMode.PercentOutput, -Rtrigger);
         }else if(Ltrigger>Constants.kStickTolerance){
-            intake.set(ControlMode.PercentOutput, -Ltrigger);
+            intake.set(ControlMode.PercentOutput, Ltrigger);
         }else{
             intake.set(ControlMode.PercentOutput, 0);
         }

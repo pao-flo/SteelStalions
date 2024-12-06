@@ -6,7 +6,7 @@ public class MoveBackAction{
   Chassis mAutoDrive = new Chassis();
   
   public void finalMoveBackACtion(){
-    mAutoDrive.outMotoresAuto(0.3, 0.3, -0.3, -0.3);
+    mAutoDrive.outMotoresAuto(-0.3, -0.3, 0.3, 0.3);
     //checar signos
   }
 }

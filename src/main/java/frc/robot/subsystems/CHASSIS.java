@@ -40,7 +40,7 @@ public class Chassis {
         realLeftSpeed=0;
         realRightSpeed=0;
 
-        try{
+        /*try{
             navx = new AHRS(SPI.Port.kMXP);
             Timer.delay(0.5);
             navx.reset();
@@ -48,7 +48,7 @@ public class Chassis {
         }
         catch(Exception e){
             System.out.println("navx not working");
-        }
+        }*/
     }
 
     public void avanzar(double yInput, double xInput){
@@ -91,7 +91,7 @@ public class Chassis {
     }
 
     public void outputTelemetry(){
-        SmartDashboard.putNumber("navx angle", navx.getAngle());
+        //SmartDashboard.putNumber("navx angle", navx.getAngle());
     }
 }
    

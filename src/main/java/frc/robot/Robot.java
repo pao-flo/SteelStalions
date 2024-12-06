@@ -63,7 +63,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    m_pdh.setSwitchableChannel(false);
+    m_pdh.setSwitchableChannel(true);
     m_pdh.clearStickyFaults();
 
     mChassis = new Chassis();
@@ -74,9 +74,9 @@ public class Robot extends TimedRobot {
 
     try{
       navx = new AHRS(SPI.Port.kMXP);
-      Timer.delay(0.5);
+      Timer.delay(1);
       navx.reset();
-      Timer.delay(0.5);
+      Timer.delay(1);
     }
     catch(Exception e){
       System.out.println("navx not working");
@@ -114,7 +114,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     mAutoTimer.autoRelativeTimeControl();
-    angle = navx.getAngle();
+    //angle = navx.getAngle();
   }
 
   /** This function is called periodically during autonomous. */
@@ -123,13 +123,18 @@ public class Robot extends TimedRobot {
     mLeds.SetState(State.Auto);
     mAutoTimer.autoAbsoluteTimeControl(); 
     double difTime = mAutoTimer.getAbsoluteTimer()-mAutoTimer.getRelativeTimer();
-    if(difTime<2){
+    double angle = navx.getYaw();
+    SmartDashboard.putNumber("angle", angle);
+    /*if(angle<90){
+      mTurnRightAction.finalTurnRightAction();
+    }else mStopAction.finalStopAction();*/
+    if(difTime>0 && difTime<0.5){
       mMoveForwardAction.finalMoveForwardAction();
-    }else if(difTime>2 && difTime<2.3){
-      mTurnLeftAction.finalTurnLeftAction();
-    }else if(difTime>2.3 && difTime<3.7){
+    }else if(difTime>0.5 && difTime<2){
+      mTurnLeftAction.finalTurnLeftAction(Math.abs(angle), 90);
+    }else if(difTime>2.3 && difTime<3){
       mMoveForwardAction.finalMoveForwardAction();
-    }else if(difTime>3.7 && difTime<3.9){
+    }/*else if(difTime>3.7 && difTime<3.9){
       mTurnLeftAction.finalTurnLeftAction();
     }else if(difTime>3.9 && difTime<4.5){
       mMoveForwardAction.finalMoveForwardAction();
@@ -157,7 +162,7 @@ public class Robot extends TimedRobot {
       mMoveForwardAction.finalMoveForwardAction();
     }else if(difTime>4.5 && difTime<5.18){
       mLeaveBallAction.finalLeaveBallAction();
-    }else mStopAction.finalStopAction();
+    }*/else mStopAction.finalStopAction();
 
   }
 
@@ -170,18 +175,20 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    
   }
 
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic(){
     mLeds.SetState(State.Teleop);
-    mChassis.avanzar(mControl.left_Y_stick_driver(),mControl.left_X_stick_driver());
-    mIntake.eat(mControl.right_trigger_mecanisms(), mControl.left_trigger_mecanisms());
-    mGarra.grab(mControl.right_x_stick_mecanisms());
+    m_pdh.setSwitchableChannel(false);
+    mChassis.avanzar(mControl.left_Y_stick_driver(),mControl.right_x_stick_driver());
+    mIntake.eat(mControl.right_trigger_driver(), mControl.left_trigger_driver());
+    mGarra.grab(mControl.left_x_stick_mecanisms());
 
-    double angle = mChassis.navx.getYaw();
-    SmartDashboard.putNumber("angle", angle);
+    //double angle = mChassis.navx.getYaw();
+    //SmartDashboard.putNumber("angle", angle);
   }
 
   @Override

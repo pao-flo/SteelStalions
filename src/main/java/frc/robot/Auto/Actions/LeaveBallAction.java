@@ -6,6 +6,6 @@ public class LeaveBallAction{
   Intake mIntake = new Intake();
   
   public void finalLeaveBallAction(){
-    mIntake.eatAuto(-0.4);
+    mIntake.eatAuto(0.4);
   }
 }

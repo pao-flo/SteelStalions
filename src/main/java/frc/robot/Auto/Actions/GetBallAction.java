@@ -6,6 +6,6 @@ public class GetBallAction{
   Intake mIntake = new Intake();
   
   public void finalGetBallAction(){
-    mIntake.eatAuto(0.4);
+    mIntake.eatAuto(-0.4);
   }
 }

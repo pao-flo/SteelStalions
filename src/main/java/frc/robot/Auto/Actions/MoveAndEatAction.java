@@ -8,8 +8,8 @@ public class MoveAndEatAction{
   Intake mIntake = new Intake();
   
   public void finalMoveAndEatAction(){
-    mAutoDrive.outMotoresAuto(-0.3, -0.3, 0.3, 0.3);
-    mIntake.eatAuto(0.4);
+    mAutoDrive.outMotoresAuto(0.3, 0.3, -0.3, -0.3);
+    mIntake.eatAuto(-0.4);
     //checar signos
   }
 }

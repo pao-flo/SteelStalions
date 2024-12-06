@@ -11,10 +11,10 @@ public final class Constants {
     public static final double kStickTolerance = 0.15;
   
     //--------------------chassis--------------//
-    public static final int kDriveRight1 = 1;
-    public static final int kDriveRight2 = 2;
-    public static final int kDriveLeft1 = 3;
-    public static final int kDriveLeft2 = 4;
+    public static final int kDriveRight1 = 3;
+    public static final int kDriveRight2 = 4;
+    public static final int kDriveLeft1 = 1; //si
+    public static final int kDriveLeft2 = 2;
   
     //--------------------intake--------------//
     public static final int kIntake = 5;
