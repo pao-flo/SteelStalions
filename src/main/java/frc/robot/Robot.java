@@ -18,6 +18,7 @@ import frc.robot.subsystems.Leds;
 import frc.robot.subsystems.Leds.State;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Auto.Actions.CorrectAction;
 //Auto
 import frc.robot.Auto.Actions.GetTimeAction;
 import frc.robot.Auto.Actions.MoveBackAction;
@@ -50,6 +51,7 @@ public class Robot extends TimedRobot {
   MoveBackAction mMoveBackAction = new MoveBackAction();
   LeaveBallAction mLeaveBallAction = new LeaveBallAction();
   MoveAndEatAction mMoveAndEatAction = new MoveAndEatAction();
+  CorrectAction mCorrectAction = new CorrectAction();
 
   private static final int PDH_CAN_ID = 1;
   private static final int NUM_PDH_CHANNELS = 24;
@@ -123,46 +125,37 @@ public class Robot extends TimedRobot {
     mLeds.SetState(State.Auto);
     mAutoTimer.autoAbsoluteTimeControl(); 
     double difTime = mAutoTimer.getAbsoluteTimer()-mAutoTimer.getRelativeTimer();
-    double angle = navx.getYaw();
+    double angle = navx.getPitch();
     SmartDashboard.putNumber("angle", angle);
     /*if(angle<90){
       mTurnRightAction.finalTurnRightAction();
     }else mStopAction.finalStopAction();*/
-    if(difTime>0 && difTime<0.5){
+    if(difTime>0 && difTime<2.4){
       mMoveForwardAction.finalMoveForwardAction();
-    }else if(difTime>0.5 && difTime<2){
-      mTurnLeftAction.finalTurnLeftAction(Math.abs(angle), 90);
-    }else if(difTime>2.3 && difTime<3){
-      mMoveForwardAction.finalMoveForwardAction();
-    }/*else if(difTime>3.7 && difTime<3.9){
-      mTurnLeftAction.finalTurnLeftAction();
-    }else if(difTime>3.9 && difTime<4.5){
-      mMoveForwardAction.finalMoveForwardAction();
-    }else if(difTime>4.5 && difTime<5.18){
+    }else if(difTime>2.4 && difTime<3.5){
       mLeaveBallAction.finalLeaveBallAction();
-    }else if(difTime>5.18 && difTime<6.98){
-      mMoveBackAction.finalMoveBackACtion();
-    }else if(difTime>6.98 && difTime<8){
-      mTurnRightAction.finalTurnRightAction();
-    }else if(difTime>8 && difTime<8.15){
+    }
+    /*else if(difTime>2 && difTime<3){
+      mTurnLeftAction.finalTurnLeftAction(Math.abs(angle), 90);
+    }else if(difTime>3 && difTime<5){
       mMoveForwardAction.finalMoveForwardAction();
-    }else if(difTime>8.15 && difTime<8.6){
+    }else if(difTime>5 && difTime<6){
+      mTurnLeftAction.finalTurnLeftAction(Math.abs(angle), 175);
+    }else if(difTime>6 && difTime<9){
+      mMoveForwardAction.finalMoveForwardAction();
+    }else if(difTime>9 && difTime<9.5){
+      mLeaveBallAction.finalLeaveBallAction();
+    }/*else if(difTime>9.5 && difTime<10.5){
+      mMoveBackAction.finalMoveBackACtion();
+    }else if(difTime>10.5 && difTime<11.5){
+      mTurnRightAction.finalTurnRightAction(angle,10);
+    }else if(difTime>11.5 && difTime<15.5){
+      mMoveForwardAction.finalMoveForwardAction();
+    }else if(difTime>15.5 && difTime<16.5){
       mTurnRightAction.finalTurnRightAction();
     }else if(difTime>5.18 && difTime<6.98){
       mMoveAndEatAction.finalMoveAndEatAction();
-    }else if(difTime>5.18 && difTime<6.98){
-      mMoveForwardAction.finalMoveForwardAction();
-    }else if(difTime>2 && difTime<2.3){
-      mTurnLeftAction.finalTurnLeftAction();
-    }else if(difTime>2.3 && difTime<3.7){
-      mMoveForwardAction.finalMoveForwardAction();
-    }else if(difTime>3.7 && difTime<3.9){
-      mTurnLeftAction.finalTurnLeftAction();
-    }else if(difTime>3.9 && difTime<4.5){
-      mMoveForwardAction.finalMoveForwardAction();
-    }else if(difTime>4.5 && difTime<5.18){
-      mLeaveBallAction.finalLeaveBallAction();
-    }*/else mStopAction.finalStopAction();
+    */else mStopAction.finalStopAction();
 
   }
 
@@ -184,7 +177,7 @@ public class Robot extends TimedRobot {
     mLeds.SetState(State.Teleop);
     m_pdh.setSwitchableChannel(false);
     mChassis.avanzar(mControl.left_Y_stick_driver(),mControl.right_x_stick_driver());
-    mIntake.eat(mControl.right_trigger_driver(), mControl.left_trigger_driver());
+    mIntake.eat(mControl.right_trigger_mecanisms(), mControl.left_trigger_mecanisms());
     mGarra.grab(mControl.left_x_stick_mecanisms());
 
     //double angle = mChassis.navx.getYaw();

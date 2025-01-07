@@ -6,7 +6,7 @@ public class MoveForwardAction{
   Chassis mAutoDrive = new Chassis();
   
   public void finalMoveForwardAction(){
-    mAutoDrive.outMotoresAuto(0.3, 0.3, -0.3, -0.3);
+    mAutoDrive.outMotoresAuto(0.4, 0.4, -0.4, -0.4);
     //checar signos
   }
 }
